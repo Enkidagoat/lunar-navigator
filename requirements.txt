@@ -3,3 +3,5 @@ plotly>=5.18
 skyfield>=1.49
 numpy
 pandas
+fastapi>=0.110
+uvicorn>=0.27
