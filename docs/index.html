@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lunar Navigator — Geometric Sun & Earth Visibility</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: system-ui, sans-serif; margin: 0; background: #0b0f14; color: #e6edf3; line-height: 1.5; }
+    header, main, footer { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+    h1 { margin: 0 0 .25rem; font-size: 1.8rem; }
+    .sub { color: #8b949e; margin-bottom: 1.5rem; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+    .metric { font-size: 1.6rem; font-weight: 600; }
+    .label { color: #8b949e; font-size: .85rem; }
+    .warn { background: #3d2a00; border-color: #9e6a03; color: #f0c674; }
+    a { color: #58a6ff; }
+    footer { color: #8b949e; font-size: .9rem; border-top: 1px solid #30363d; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lunar Navigator</h1>
+    <p class="sub">Geometric Sun-center and Earth-center elevation comparison for published south-polar candidate points.</p>
+  </header>
+  <main>
+    <div class="card warn">
+      Geometric center of the Sun and Earth above a smooth spherical tangent plane. Not terrain-aware, not apparent-disk visibility, not power, thermal, or communications assessment. Coordinates provisionally interpreted as planetocentric in MOON_ME_DE421.
+    </div>
+
+    <h2>Primary demonstration — 1–14 January 2028</h2>
+    <p>Largest simultaneous-availability contrast in the fixed three-site, three-window set.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>DM2-358 — Nobile Rim 2</h3>
+        <div class="label">Sun above horizon</div>
+        <div class="metric">326 / 336 (97.0%)</div>
+        <div class="label">Earth above horizon</div>
+        <div class="metric">324 / 336 (96.4%)</div>
+        <div class="label">Simultaneous (both > 0°)</div>
+        <div class="metric">324 / 336 (96.4%)</div>
+      </div>
+      <div class="card">
+        <h3>SITE07-1223 — Peak Near Shackleton</h3>
+        <div class="label">Sun above horizon</div>
+        <div class="metric">237 / 336 (70.5%)</div>
+        <div class="label">Earth above horizon</div>
+        <div class="metric">275 / 336 (81.8%)</div>
+        <div class="label">Simultaneous (both > 0°)</div>
+        <div class="metric">237 / 336 (70.5%)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <strong>Difference:</strong> +25.9 percentage points simultaneous (87 samples). Post-hoc descriptive ranking over the fixed set, not a mission-optimized or statistically tested ranking.
+    </div>
+
+    <h2>Other contrasts in the same dataset</h2>
+    <ul>
+      <li>December 2026, SITE07-1223: 336/336 Sun, 0/336 Earth (complete disagreement).</li>
+      <li>June 2027, SITE07-1223: 0/336 Sun, 177/336 Earth (opposite phase).</li>
+    </ul>
+
+    <h2>Interactive app</h2>
+    <p>Full Streamlit interface (drama windows + live calculation) lives in the repository:</p>
+    <p><a href="https://github.com/holeyfield33-art/lunar-navigator">github.com/holeyfield33-art/lunar-navigator</a></p>
+    <p>Run locally with <code>streamlit run app.py</code> after placing <code>data/drama_windows.csv</code> and the DE421 kernels.</p>
+
+    <h2>Data and method</h2>
+    <ul>
+      <li>Three published points from Peña-Asensio et al. (provisional MOON_ME_DE421 interpretation).</li>
+      <li>Hourly UTC samples, inclusive calendar days, no interpolation.</li>
+      <li>Skyfield + pinned DE421 kernels.</li>
+      <li>Simultaneous visibility = both geometric centers above the smooth tangent plane at the same sample.</li>
+    </ul>
+  </main>
+  <footer>
+    Lunar Navigator · NASA Space Apps Challenge 2026 · Geometric comparison only. Not operational visibility, power, or communications assessment.
+  </footer>
+</body>
+</html>
