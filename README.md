@@ -1,2 +1,37 @@
-# lunar-navigator
-Lunar illumination and Earth-visibility comparison for south-polar candidate sites. Geometric Sun/Earth center elevations, ranked drama windows, and live calculation. NASA Space Apps Challenge 2026.
+# Lunar Navigator
+
+Geometric Sun-center and Earth-center elevation comparison for three published south-polar candidate points.
+
+**Primary demonstration (January 1–14 2028)**  
+DM2-358 (Nobile Rim 2) vs SITE07-1223 (Peak Near Shackleton)  
+Simultaneous samples (both centers above the smooth geometric horizon): **324 / 336** vs **237 / 336**.
+
+## What this is
+
+A Streamlit application that shows when the geometric centers of the Sun and Earth are above a smooth spherical tangent plane at three published candidate points, and when those conditions coincide.
+
+## What this is not
+
+- Not a terrain-aware horizon model  
+- Not an apparent-disk visibility calculation  
+- Not a power, thermal, or communications assessment  
+- Not an absolute ranking of landing sites  
+
+Coordinates are provisionally interpreted as planetocentric in the MOON_ME_DE421 frame. The cited source does not explicitly state the reference frame.
+
+## Run
+
+```bash
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+Kernels are expected in `data/kernels/` (or set `LUNAR_NAVIGATOR_KERNEL_DIR`).  
+The drama-window CSV is already in `data/`.
+
+## Data
+
+- `data/drama_windows.csv` — 3 024 hourly samples (3 sites × 3 windows × 336 hours)  
+- `data/site_cards.json` — site metadata and window summaries  
+
+Geometry uses Skyfield with DE421 kernels. Hourly UTC sampling, inclusive calendar days, no interpolation.
