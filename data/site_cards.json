@@ -1,0 +1,276 @@
+{
+  "schema_version": "1.0",
+  "coordinate_interpretation_warning": "The cited source publishes coordinates but does not explicitly state their reference frame. The engine provisionally interprets them as planetocentric in MOON_ME_DE421.",
+  "sites": [
+    {
+      "site_id": "DM2-358",
+      "name": "Nobile Rim 2 — published point 358",
+      "latitude_deg": -84.201558333333,
+      "longitude_deg_signed_east_positive": 60.699891666667,
+      "latitude_convention": "planetocentric",
+      "longitude_convention": "signed east-positive degrees",
+      "reference_frame_interpretation": "MOON_ME_DE421",
+      "reference_surface_elevation_assumption_m": 0.0,
+      "coordinate_interpretation": "The source publishes exact DMS coordinates and hemisphere labels but does not state a coordinate reference frame in its coordinate table/full text. The app provisionally interprets them as planetocentric in the USGS-recommended DE421 Mean Earth frame.",
+      "source_url": "https://www.sciencedirect.com/science/article/pii/S0094576524006234",
+      "source_coordinate_text": "84°12′5.61″ S, 60°41′59.61″ E",
+      "window_summaries": [
+        {
+          "window_id": "2026-12-01_14d",
+          "window_start_utc": "2026-12-01T00:00:00Z",
+          "window_end_utc": "2026-12-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -4.341814507722642,
+            "maximum_elevation_deg": 5.14297169860289,
+            "mean_elevation_deg": -1.2827603808560888,
+            "samples_above_zero_deg": 109,
+            "samples_at_or_below_zero_deg": 227,
+            "approx_hours_above_zero_sample_count": 109,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -3.6253133102718644,
+            "maximum_elevation_deg": 2.5813639009126295,
+            "mean_elevation_deg": -1.516637745200848,
+            "samples_above_zero_deg": 82,
+            "samples_at_or_below_zero_deg": 254,
+            "approx_hours_above_zero_sample_count": 82,
+            "horizon_sign_change_intervals": 2,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        },
+        {
+          "window_id": "2027-06-01_14d",
+          "window_start_utc": "2027-06-01T00:00:00Z",
+          "window_end_utc": "2027-06-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -6.926778925876976,
+            "maximum_elevation_deg": 4.59465623742165,
+            "mean_elevation_deg": -0.4303418068834953,
+            "samples_above_zero_deg": 168,
+            "samples_at_or_below_zero_deg": 168,
+            "approx_hours_above_zero_sample_count": 168,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -3.52893223906774,
+            "maximum_elevation_deg": 8.61447038172926,
+            "mean_elevation_deg": 3.4410936510074013,
+            "samples_above_zero_deg": 233,
+            "samples_at_or_below_zero_deg": 103,
+            "approx_hours_above_zero_sample_count": 233,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        },
+        {
+          "window_id": "2028-01-01_14d",
+          "window_start_utc": "2028-01-01T00:00:00Z",
+          "window_end_utc": "2028-01-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -0.488000595680704,
+            "maximum_elevation_deg": 6.298088742127781,
+            "mean_elevation_deg": 4.253242233508294,
+            "samples_above_zero_deg": 326,
+            "samples_at_or_below_zero_deg": 10,
+            "approx_hours_above_zero_sample_count": 326,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -0.7020720998866872,
+            "maximum_elevation_deg": 8.738854788409947,
+            "mean_elevation_deg": 6.059588498317859,
+            "samples_above_zero_deg": 324,
+            "samples_at_or_below_zero_deg": 12,
+            "approx_hours_above_zero_sample_count": 324,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "DM1-1121",
+      "name": "Amundsen Rim — published point 1121",
+      "latitude_deg": -84.191841666667,
+      "longitude_deg_signed_east_positive": 67.229041666667,
+      "latitude_convention": "planetocentric",
+      "longitude_convention": "signed east-positive degrees",
+      "reference_frame_interpretation": "MOON_ME_DE421",
+      "reference_surface_elevation_assumption_m": 0.0,
+      "coordinate_interpretation": "The source publishes exact DMS coordinates and hemisphere labels but does not state a coordinate reference frame in its coordinate table/full text. The app provisionally interprets them as planetocentric in the USGS-recommended DE421 Mean Earth frame.",
+      "source_url": "https://www.sciencedirect.com/science/article/pii/S0094576524006234",
+      "source_coordinate_text": "84°11′30.63″ S, 67°13′44.55″ E",
+      "window_summaries": [
+        {
+          "window_id": "2026-12-01_14d",
+          "window_start_utc": "2026-12-01T00:00:00Z",
+          "window_end_utc": "2026-12-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -4.349804576480742,
+            "maximum_elevation_deg": 5.626779838318201,
+            "mean_elevation_deg": -0.9539210349617503,
+            "samples_above_zero_deg": 121,
+            "samples_at_or_below_zero_deg": 215,
+            "approx_hours_above_zero_sample_count": 121,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -4.188645666874935,
+            "maximum_elevation_deg": 1.9655775429423454,
+            "mean_elevation_deg": -2.089097368051968,
+            "samples_above_zero_deg": 59,
+            "samples_at_or_below_zero_deg": 277,
+            "approx_hours_above_zero_sample_count": 59,
+            "horizon_sign_change_intervals": 2,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        },
+        {
+          "window_id": "2027-06-01_14d",
+          "window_start_utc": "2027-06-01T00:00:00Z",
+          "window_end_utc": "2027-06-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -6.7026557980625014,
+            "maximum_elevation_deg": 4.598268753347256,
+            "mean_elevation_deg": -0.004842519288891873,
+            "samples_above_zero_deg": 181,
+            "samples_at_or_below_zero_deg": 155,
+            "approx_hours_above_zero_sample_count": 181,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -4.08088256176909,
+            "maximum_elevation_deg": 7.995435346596142,
+            "mean_elevation_deg": 2.8576134668933335,
+            "samples_above_zero_deg": 224,
+            "samples_at_or_below_zero_deg": 112,
+            "approx_hours_above_zero_sample_count": 224,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        },
+        {
+          "window_id": "2028-01-01_14d",
+          "window_start_utc": "2028-01-01T00:00:00Z",
+          "window_end_utc": "2028-01-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -1.1391097439955338,
+            "maximum_elevation_deg": 6.321983868864926,
+            "mean_elevation_deg": 4.140579886477497,
+            "samples_above_zero_deg": 314,
+            "samples_at_or_below_zero_deg": 22,
+            "approx_hours_above_zero_sample_count": 314,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -1.275620824111173,
+            "maximum_elevation_deg": 8.11486119029407,
+            "mean_elevation_deg": 5.449460584947453,
+            "samples_above_zero_deg": 314,
+            "samples_at_or_below_zero_deg": 22,
+            "approx_hours_above_zero_sample_count": 314,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "SITE07-1223",
+      "name": "Peak Near Shackleton — published point 1223",
+      "latitude_deg": -89.005061111111,
+      "longitude_deg_signed_east_positive": 125.309302777778,
+      "latitude_convention": "planetocentric",
+      "longitude_convention": "signed east-positive degrees",
+      "reference_frame_interpretation": "MOON_ME_DE421",
+      "reference_surface_elevation_assumption_m": 0.0,
+      "coordinate_interpretation": "The source publishes exact DMS coordinates and hemisphere labels but does not state a coordinate reference frame in its coordinate table/full text. The app provisionally interprets them as planetocentric in the USGS-recommended DE421 Mean Earth frame.",
+      "source_url": "https://www.sciencedirect.com/science/article/pii/S0094576524006234",
+      "source_coordinate_text": "89°0′18.22″ S, 125°18′33.49″ E",
+      "window_summaries": [
+        {
+          "window_id": "2026-12-01_14d",
+          "window_start_utc": "2026-12-01T00:00:00Z",
+          "window_end_utc": "2026-12-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": 0.570100642638415,
+            "maximum_elevation_deg": 2.386110412727372,
+            "mean_elevation_deg": 1.6647106655263078,
+            "samples_above_zero_deg": 336,
+            "samples_at_or_below_zero_deg": 0,
+            "approx_hours_above_zero_sample_count": 336,
+            "horizon_sign_change_intervals": 0,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -7.354072247874735,
+            "maximum_elevation_deg": -0.392503040059347,
+            "mean_elevation_deg": -5.107780021505726,
+            "samples_above_zero_deg": 0,
+            "samples_at_or_below_zero_deg": 336,
+            "approx_hours_above_zero_sample_count": 0,
+            "horizon_sign_change_intervals": 0,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        },
+        {
+          "window_id": "2027-06-01_14d",
+          "window_start_utc": "2027-06-01T00:00:00Z",
+          "window_end_utc": "2027-06-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -1.5317598862173607,
+            "maximum_elevation_deg": -0.26924572243649947,
+            "mean_elevation_deg": -0.6386909485970137,
+            "samples_above_zero_deg": 0,
+            "samples_at_or_below_zero_deg": 336,
+            "approx_hours_above_zero_sample_count": 0,
+            "horizon_sign_change_intervals": 0,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -7.376064213791644,
+            "maximum_elevation_deg": 5.6845629314075055,
+            "mean_elevation_deg": -0.009164104618240916,
+            "samples_above_zero_deg": 177,
+            "samples_at_or_below_zero_deg": 159,
+            "approx_hours_above_zero_sample_count": 177,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        },
+        {
+          "window_id": "2028-01-01_14d",
+          "window_start_utc": "2028-01-01T00:00:00Z",
+          "window_end_utc": "2028-01-14T23:00:00Z",
+          "sun": {
+            "minimum_elevation_deg": -0.7282352717748386,
+            "maximum_elevation_deg": 1.6156953831559324,
+            "mean_elevation_deg": 0.6028648306446882,
+            "samples_above_zero_deg": 237,
+            "samples_at_or_below_zero_deg": 99,
+            "approx_hours_above_zero_sample_count": 237,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          },
+          "earth": {
+            "minimum_elevation_deg": -4.3095302428646125,
+            "maximum_elevation_deg": 5.90442384711727,
+            "mean_elevation_deg": 2.984129966572555,
+            "samples_above_zero_deg": 275,
+            "samples_at_or_below_zero_deg": 61,
+            "approx_hours_above_zero_sample_count": 275,
+            "horizon_sign_change_intervals": 1,
+            "summary_method": "sample-based; no interpolation; >0 deg counts above the geometric center horizon"
+          }
+        }
+      ]
+    }
+  ]
+}
