@@ -1,1 +1,68 @@
-PLACEHOLDER_WILL_REPLACE
+{
+  "schema_version": "1.0",
+  "dataset_id": "ashuraslight_drama_windows_v1",
+  "input_files": {
+    "drama_windows.csv": {
+      "sha256": "5d167d4d411ea7e8d8d05657e7555610422aa524929eb2730bd8e84ae11508c3",
+      "rows": 3024
+    },
+    "drama_windows.json": {
+      "sha256": "9bc9a407ebe3a6fc80ad83859fd3339e64584a0e67338e73ea4ba1841f9515e2"
+    }
+  },
+  "definitions": {
+    "sunlight_fraction": "count(sun_elevation_deg > 0) / 336; center of Sun above smooth geometric tangent horizon at hourly samples",
+    "earth_visibility_fraction": "count(earth_elevation_deg > 0) / 336; center of Earth above smooth geometric tangent horizon at hourly samples",
+    "simultaneous_availability_fraction": "count(sun_elevation_deg > 0 AND earth_elevation_deg > 0) / 336",
+    "simultaneous_state_change": "adjacent hourly samples switch the Boolean simultaneous state; transition timestamp is the first sample in the new state, so crossing is bracketed by the preceding hour",
+    "disagreement": "Sun and Earth center-elevation Boolean states differ"
+  },
+  "data_quality": {
+    "expected_rows": 3024,
+    "observed_rows": 3024,
+    "unique_window_site_timestamp_keys": 3024,
+    "duplicate_keys": 0,
+    "invalid_or_out_of_range_geometry_values": 0,
+    "window_site_groups": 9,
+    "each_group_has_336_rows": true,
+    "all_timestamps_match_exact_hourly_window_grid": true,
+    "missing_timestamp_count": 0,
+    "gaps_count": 0,
+    "json_summary_fields_rechecked": 90,
+    "json_summary_checks_passed": 90,
+    "json_summary_failures": [],
+    "interpretation": "No missing samples, duplicate keys, non-finite/out-of-range geometry, or unexpected angular discontinuity detected."
+  },
+  "recommended_demo_comparison": {
+    "selection_rule": "Largest pairwise difference in simultaneous_availability_fraction among the nine evaluated within-window site pairs. This is a post hoc descriptive ranking over the fixed comparison set, not a statistical significance test or an exhaustive search over epochs.",
+    "window_id": "2028-01-01_14d",
+    "window_start_utc": "2028-01-01T00:00:00Z",
+    "window_end_utc": "2028-01-14T23:00:00Z",
+    "higher_site": "DM2-358",
+    "lower_site": "SITE07-1223",
+    "higher_site_counts": {
+      "sun": 326,
+      "earth": 324,
+      "simultaneous": 324
+    },
+    "lower_site_counts": {
+      "sun": 237,
+      "earth": 275,
+      "simultaneous": 237
+    },
+    "contrasts_percentage_points": {
+      "sunlight": 26.488095238095234,
+      "earth_center_above_horizon": 14.583333333333337,
+      "simultaneous": 25.89285714285714
+    },
+    "simultaneous_count_difference": 87
+  },
+  "limitations": [
+    "Visibility is operationally defined here only as center elevation >0\u00b0 above a smooth geometric tangent horizon; it is not apparent-disk or terrain-aware visibility.",
+    "Coordinates are provisionally interpreted in MOON_ME_DE421; the cited source does not explicitly state the coordinate frame.",
+    "Only three preselected windows and three point sites are included; ranking is descriptive and not a mission-optimized or exhaustive site evaluation.",
+    "Hourly sampling brackets transitions to one-hour intervals and may miss shorter changes; reported fractions are sample-count fractions, not continuous-duration integrals.",
+    "No uncertainty model, terrain, power, communications, environment, or surface engineering model is included."
+  ],
+  "recommendation_status": "Compelling for a bounded geometric comparison demonstration; not sufficient to claim validated absolute site ranking or true operational visibility."
+}
