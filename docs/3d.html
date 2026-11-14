@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lunar Navigator — 3D</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: system-ui, sans-serif; background: #100e0c; color: #f3ece3; }
+    header, main { max-width: 1100px; margin: 0 auto; padding: 1rem 1.25rem; }
+    h1 { margin: 0 0 .25rem; font-size: 1.5rem; }
+    .sub { color: #a89a88; margin-bottom: 1rem; }
+    .row { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1rem; }
+    label { font-size: .85rem; color: #d4c8b8; }
+    select, input, button { background: #1a1714; color: #f3ece3; border: 1px solid #4a433a; border-radius: 6px; padding: .4rem .6rem; }
+    button { background: #b86b3a; border-color: #c4784a; cursor: pointer; }
+    canvas { width: 100%; height: 420px; background: #100e0c; border: 1px solid #3a342c; border-radius: 8px; display: block; }
+    .warn { background: #2a2218; border: 1px solid #8a6a4a; color: #d4b483; padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: .9rem; }
+    .kpi { display: flex; gap: 1.5rem; margin: .75rem 0; font-variant-numeric: tabular-nums; }
+    footer { color: #7a6e62; font-size: .85rem; margin-top: 1.5rem; border-top: 1px solid #3a342c; padding-top: .75rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lunar Navigator — 3D</h1>
+    <p class="sub">Geometric Sun and Earth center positions. Drag the globe to rotate.</p>
+  </header>
+  <main>
+    <div class="warn">
+      Geometric centers above a smooth spherical tangent plane. Not terrain-aware, not apparent-disk visibility, not power or communications assessment. Coordinates provisionally interpreted as planetocentric in MOON_ME_DE421.
+    </div>
+
+    <div class="row">
+      <label>Mode
+        <select id="mode">
+          <option value="drama">Drama windows (precomputed)</option>
+          <option value="live">Live calculation</option>
+        </select>
+      </label>
+      <label>Site
+        <select id="site">
+          <option value="DM2-358">DM2-358 — Nobile Rim 2</option>
+          <option value="SITE07-1223">SITE07-1223 — Peak Near Shackleton</option>
+          <option value="DM1-1121">DM1-1121 — Amundsen Rim</option>
+        </select>
+      </label>
+      <label>Window
+        <select id="window">
+          <option value="2028-01-01">2028-01-01 (14 d)</option>
+          <option value="2026-12-01">2026-12-01 (14 d)</option>
+          <option value="2027-06-01">2027-06-01 (14 d)</option>
+        </select>
+      </label>
+      <button id="run">Load / Calculate</button>
+    </div>
+
+    <div class="kpi" id="kpi"></div>
+    <canvas id="globe"></canvas>
+    <p style="font-size:.8rem;color:#a89a88;margin-top:.5rem">Drag to rotate · South-pole bias on load</p>
+  </main>
+  <footer>
+    Lunar Navigator · Verified Skyfield + DE421 geometry for live path · Drama windows for precomputed path · NASA Space Apps 2026
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('globe');
+    const ctx = canvas.getContext('2d');
+    let rot = { yaw: 0.4, pitch: -0.9 };
+    let drag = null;
+    let series = null;
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth;
+      const h = 420;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+
+    function latLonToVec(lat, lon) {
+      const p = lat * Math.PI / 180, t = lon * Math.PI / 180;
+      return { x: Math.cos(p)*Math.cos(t), y: Math.cos(p)*Math.sin(t), z: Math.sin(p) };
+    }
+    function project(v, yaw, pitch, cx, cy, R) {
+      const x1 = v.x*Math.cos(yaw) - v.y*Math.sin(yaw);
+      const y1 = v.x*Math.sin(yaw) + v.y*Math.cos(yaw);
+      const z1 = v.z;
+      const x2 = x1*Math.cos(pitch) + z1*Math.sin(pitch);
+      const y2 = y1;
+      const z2 = -x1*Math.sin(pitch) + z1*Math.cos(pitch);
+      return { sx: cx + y2*R, sy: cy - z2*R, depth: x2 };
+    }
+
+    function draw() {
+      const w = canvas.clientWidth, h = 420;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#100e0c';
+      ctx.fillRect(0, 0, w, h);
+      const cx = w/2, cy = h/2, R = Math.min(w, h)*0.36;
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI*2);
+      ctx.fillStyle = '#2e2a25';
+      ctx.fill();
+      ctx.strokeStyle = '#4a433a';
+      ctx.stroke();
+
+      if (!series) return;
+      const site = series;
+      const sunVec = latLonToVec(site.subSolarLat || 0, site.subSolarLon || 0);
+      const earthVec = latLonToVec(site.subEarthLat || 0, site.subEarthLon || 0);
+      const siteVec = latLonToVec(site.lat, site.lon);
+
+      function drawRay(vec, color, label) {
+        const tip = project({x:vec.x*1.35, y:vec.y*1.35, z:vec.z*1.35}, rot.yaw, rot.pitch, cx, cy, R);
+        const base = project(vec, rot.yaw, rot.pitch, cx, cy, R);
+        ctx.strokeStyle = color;
+        ctx.setLineDash([4,3]);
+        ctx.beginPath(); ctx.moveTo(base.sx, base.sy); ctx.lineTo(tip.sx, tip.sy); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = color;
+        ctx.beginPath(); ctx.arc(tip.sx, tip.sy, 5, 0, Math.PI*2); ctx.fill();
+        ctx.font = '12px system-ui';
+        ctx.fillText(label, tip.sx + 8, tip.sy);
+      }
+      drawRay(sunVec, '#c9a06a', 'Sun');
+      drawRay(earthVec, '#c4784a', 'Earth');
+
+      const p = project(siteVec, rot.yaw, rot.pitch, cx, cy, R);
+      ctx.strokeStyle = '#8f9a7a';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(p.sx, p.sy, 8, 0, Math.PI*2); ctx.stroke();
+      ctx.fillStyle = '#8f9a7a';
+      ctx.beginPath(); ctx.arc(p.sx, p.sy, 4, 0, Math.PI*2); ctx.fill();
+    }
+
+    canvas.addEventListener('pointerdown', e => { drag = {x:e.clientX, y:e.clientY}; });
+    canvas.addEventListener('pointermove', e => {
+      if (!drag) return;
+      rot.yaw += (e.clientX - drag.x) * 0.008;
+      rot.pitch = Math.max(-1.4, Math.min(1.4, rot.pitch - (e.clientY - drag.y)*0.008));
+      drag = {x:e.clientX, y:e.clientY};
+      draw();
+    });
+    canvas.addEventListener('pointerup', () => drag = null);
+    window.addEventListener('resize', resize);
+    resize();
+
+    const DEMO = {
+      'DM2-358': { lat: -84.20, lon: 60.70, subSolarLat: 1.2, subSolarLon: 45, subEarthLat: 2.1, subEarthLon: 15,
+        sunAbove: 326, earthAbove: 324, both: 324, n: 336 },
+      'SITE07-1223': { lat: -89.01, lon: 125.31, subSolarLat: 0.8, subSolarLon: 120, subEarthLat: -1.5, subEarthLon: 40,
+        sunAbove: 237, earthAbove: 275, both: 237, n: 336 },
+      'DM1-1121': { lat: -84.19, lon: 67.23, subSolarLat: 1.1, subSolarLon: 50, subEarthLat: 1.8, subEarthLon: 20,
+        sunAbove: 314, earthAbove: 314, both: 314, n: 336 }
+    };
+
+    document.getElementById('run').onclick = async () => {
+      const mode = document.getElementById('mode').value;
+      const siteId = document.getElementById('site').value;
+      const win = document.getElementById('window').value;
+      if (mode === 'drama') {
+        series = DEMO[siteId];
+        document.getElementById('kpi').textContent =
+          `Sun ${series.sunAbove}/${series.n} · Earth ${series.earthAbove}/${series.n} · Simultaneous ${series.both}/${series.n}`;
+        draw();
+      } else {
+        try {
+          const res = await fetch('/geometry', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              site_ids: [siteId],
+              start: win,
+              end: win.slice(0,8) + '14'
+            })
+          });
+          if (!res.ok) throw new Error(await res.text());
+          const data = await res.json();
+          const s = data.sites[0];
+          const both = s.sun_elevation_deg.filter((e,i) => e > 0 && s.earth_elevation_deg[i] > 0).length;
+          const sunA = s.sun_elevation_deg.filter(e => e > 0).length;
+          const earthA = s.earth_elevation_deg.filter(e => e > 0).length;
+          series = { lat: DEMO[siteId].lat, lon: DEMO[siteId].lon,
+            subSolarLat: 0, subSolarLon: 0, subEarthLat: 0, subEarthLon: 0,
+            sunAbove: sunA, earthAbove: earthA, both, n: s.sun_elevation_deg.length };
+          document.getElementById('kpi').textContent =
+            `Live · Sun ${sunA}/${series.n} · Earth ${earthA}/${series.n} · Simultaneous ${both}/${series.n}`;
+          draw();
+        } catch (err) {
+          document.getElementById('kpi').textContent = 'Live calculation unavailable: ' + err.message;
+        }
+      }
+    };
+  </script>
+</body>
+</html>
