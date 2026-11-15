@@ -68,6 +68,7 @@
     let rot = { yaw: 0.4, pitch: -0.9 };
     let drag = null;
     let series = null;
+    let dramaData = null;
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
@@ -91,6 +92,30 @@
       const y2 = y1;
       const z2 = -x1*Math.sin(pitch) + z1*Math.cos(pitch);
       return { sx: cx + y2*R, sy: cy - z2*R, depth: x2 };
+    }
+    async function loadDramaData() {
+      if (dramaData) return dramaData;
+      const response = await fetch('./drama_windows.json');
+      if (!response.ok) throw new Error(`Drama data request failed (${response.status})`);
+      dramaData = await response.json();
+      return dramaData;
+    }
+    // Convert a sample's local ENU pointing direction to a body-fixed globe point.
+    function directionPoint(site, elevationDeg, azimuthDeg) {
+      const lat = site.latitude_planetocentric_deg * Math.PI / 180;
+      const lon = site.longitude_east_signed_deg * Math.PI / 180;
+      const elevation = elevationDeg * Math.PI / 180;
+      const azimuth = azimuthDeg * Math.PI / 180;
+      const east = Math.cos(elevation) * Math.sin(azimuth);
+      const north = Math.cos(elevation) * Math.cos(azimuth);
+      const up = Math.sin(elevation);
+      const x = east * -Math.sin(lon) + north * -Math.sin(lat) * Math.cos(lon) + up * Math.cos(lat) * Math.cos(lon);
+      const y = east * Math.cos(lon) + north * -Math.sin(lat) * Math.sin(lon) + up * Math.cos(lat) * Math.sin(lon);
+      const z = north * Math.cos(lat) + up * Math.sin(lat);
+      return {
+        lat: Math.asin(Math.max(-1, Math.min(1, z))) * 180 / Math.PI,
+        lon: Math.atan2(y, x) * 180 / Math.PI
+      };
     }
 
     function draw() {
@@ -148,26 +173,36 @@
     window.addEventListener('resize', resize);
     resize();
 
-    const DEMO = {
-      'DM2-358': { lat: -84.20, lon: 60.70, subSolarLat: 1.2, subSolarLon: 45, subEarthLat: 2.1, subEarthLon: 15,
-        sunAbove: 326, earthAbove: 324, both: 324, n: 336 },
-      'SITE07-1223': { lat: -89.01, lon: 125.31, subSolarLat: 0.8, subSolarLon: 120, subEarthLat: -1.5, subEarthLon: 40,
-        sunAbove: 237, earthAbove: 275, both: 237, n: 336 },
-      'DM1-1121': { lat: -84.19, lon: 67.23, subSolarLat: 1.1, subSolarLon: 50, subEarthLat: 1.8, subEarthLon: 20,
-        sunAbove: 314, earthAbove: 314, both: 314, n: 336 }
-    };
-
     document.getElementById('run').onclick = async () => {
       const mode = document.getElementById('mode').value;
       const siteId = document.getElementById('site').value;
       const win = document.getElementById('window').value;
-      if (mode === 'drama') {
-        series = DEMO[siteId];
-        document.getElementById('kpi').textContent =
-          `Sun ${series.sunAbove}/${series.n} · Earth ${series.earthAbove}/${series.n} · Simultaneous ${series.both}/${series.n}`;
-        draw();
-      } else {
-        try {
+      try {
+        const dataset = await loadDramaData();
+        const site = dataset.sites.find(item => item.site_id === siteId);
+        if (!site) throw new Error(`No drama data for site ${siteId}`);
+        if (mode === 'drama') {
+          const windowId = `${win}_14d`;
+          const summary = site.windows.find(item => item.window_id === windowId);
+          if (!summary) throw new Error(`No drama data for window ${windowId}`);
+          const sunPoint = directionPoint(site, summary.sun_elevation_deg, summary.sun_azimuth_deg);
+          const earthPoint = directionPoint(site, summary.earth_elevation_deg, summary.earth_azimuth_deg);
+          series = {
+            lat: site.latitude_planetocentric_deg,
+            lon: site.longitude_east_signed_deg,
+            subSolarLat: sunPoint.lat,
+            subSolarLon: sunPoint.lon,
+            subEarthLat: earthPoint.lat,
+            subEarthLon: earthPoint.lon,
+            sunAbove: summary.sun_above_count,
+            earthAbove: summary.earth_above_count,
+            both: summary.simultaneous_count,
+            n: summary.sample_count
+          };
+          document.getElementById('kpi').textContent =
+            `Sun ${series.sunAbove}/${series.n} · Earth ${series.earthAbove}/${series.n} · Simultaneous ${series.both}/${series.n}`;
+          draw();
+        } else {
           const res = await fetch('/geometry', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -183,17 +218,23 @@
           const both = s.sun_elevation_deg.filter((e,i) => e > 0 && s.earth_elevation_deg[i] > 0).length;
           const sunA = s.sun_elevation_deg.filter(e => e > 0).length;
           const earthA = s.earth_elevation_deg.filter(e => e > 0).length;
-          series = { lat: DEMO[siteId].lat, lon: DEMO[siteId].lon,
+          series = { lat: site.latitude_planetocentric_deg, lon: site.longitude_east_signed_deg,
             subSolarLat: 0, subSolarLon: 0, subEarthLat: 0, subEarthLon: 0,
             sunAbove: sunA, earthAbove: earthA, both, n: s.sun_elevation_deg.length };
           document.getElementById('kpi').textContent =
             `Live · Sun ${sunA}/${series.n} · Earth ${earthA}/${series.n} · Simultaneous ${both}/${series.n}`;
           draw();
-        } catch (err) {
-          document.getElementById('kpi').textContent = 'Live calculation unavailable: ' + err.message;
         }
+      } catch (err) {
+        document.getElementById('kpi').textContent =
+          (mode === 'drama' ? 'Drama data unavailable: ' : 'Live calculation unavailable: ') + err.message;
       }
     };
+    loadDramaData()
+      .then(() => document.getElementById('run').click())
+      .catch(err => {
+        document.getElementById('kpi').textContent = 'Drama data unavailable: ' + err.message;
+      });
   </script>
 </body>
 </html>

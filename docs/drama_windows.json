@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "source_csv": "../data/drama_windows.csv",
+  "primary_window_id": "2028-01-01_14d",
+  "sites": [
+    {
+      "site_id": "DM2-358",
+      "site_name": "Nobile Rim 2 \u2014 published point 358",
+      "latitude_planetocentric_deg": -84.201558333333,
+      "longitude_east_signed_deg": 60.699891666667,
+      "windows": [
+        {
+          "window_id": "2026-12-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 109,
+          "earth_above_count": 82,
+          "simultaneous_count": 51,
+          "sun_elevation_deg": -3.0124595423772393,
+          "sun_azimuth_deg": 219.41923411907763,
+          "earth_elevation_deg": 1.7962960422297012,
+          "earth_azimuth_deg": 305.94052773174127
+        },
+        {
+          "window_id": "2027-06-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 168,
+          "earth_above_count": 233,
+          "simultaneous_count": 65,
+          "sun_elevation_deg": -6.926778925876976,
+          "sun_azimuth_deg": 162.5884933106711,
+          "earth_elevation_deg": 7.96664136005449,
+          "earth_azimuth_deg": 291.7040836464145
+        },
+        {
+          "window_id": "2028-01-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 326,
+          "earth_above_count": 324,
+          "simultaneous_count": 324,
+          "sun_elevation_deg": 2.3638294519311267,
+          "sun_azimuth_deg": 72.67825190125068,
+          "earth_elevation_deg": 5.146783514186888,
+          "earth_azimuth_deg": 297.77640174545473
+        }
+      ]
+    },
+    {
+      "site_id": "DM1-1121",
+      "site_name": "Amundsen Rim \u2014 published point 1121",
+      "latitude_planetocentric_deg": -84.191841666667,
+      "longitude_east_signed_deg": 67.229041666667,
+      "windows": [
+        {
+          "window_id": "2026-12-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 121,
+          "earth_above_count": 59,
+          "simultaneous_count": 38,
+          "sun_elevation_deg": -3.409591761391752,
+          "sun_azimuth_deg": 212.89391349445208,
+          "earth_elevation_deg": 1.2461286653463588,
+          "earth_azimuth_deg": 299.43340547112086
+        },
+        {
+          "window_id": "2027-06-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 181,
+          "earth_above_count": 224,
+          "simultaneous_count": 69,
+          "sun_elevation_deg": -6.7026557980625014,
+          "sun_azimuth_deg": 156.01856724194266,
+          "earth_elevation_deg": 7.343382700152151,
+          "earth_azimuth_deg": 285.17803461226015
+        },
+        {
+          "window_id": "2028-01-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 314,
+          "earth_above_count": 314,
+          "simultaneous_count": 314,
+          "sun_elevation_deg": 2.984984063234234,
+          "sun_azimuth_deg": 66.17208255374784,
+          "earth_elevation_deg": 4.550245906463125,
+          "earth_azimuth_deg": 291.2554535272739
+        }
+      ]
+    },
+    {
+      "site_id": "SITE07-1223",
+      "site_name": "Peak Near Shackleton \u2014 published point 1223",
+      "latitude_planetocentric_deg": -89.005061111111,
+      "longitude_east_signed_deg": 125.309302777778,
+      "windows": [
+        {
+          "window_id": "2026-12-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 336,
+          "earth_above_count": 0,
+          "simultaneous_count": 0,
+          "sun_elevation_deg": 0.5701006426384153,
+          "sun_azimuth_deg": 154.7678472178284,
+          "earth_elevation_deg": -2.086828931153717,
+          "earth_azimuth_deg": 241.38456975310373
+        },
+        {
+          "window_id": "2027-06-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 0,
+          "earth_above_count": 177,
+          "simultaneous_count": 0,
+          "sun_elevation_deg": -1.5317598862173607,
+          "sun_azimuth_deg": 98.07977850684195,
+          "earth_elevation_deg": 5.118358469571136,
+          "earth_azimuth_deg": 227.69443319808772
+        },
+        {
+          "window_id": "2028-01-01_14d",
+          "sample_count": 336,
+          "sun_above_count": 237,
+          "earth_above_count": 275,
+          "simultaneous_count": 237,
+          "sun_elevation_deg": 1.6145127910041817,
+          "sun_azimuth_deg": 7.926788337066251,
+          "earth_elevation_deg": 1.8340726350711274,
+          "earth_azimuth_deg": 233.49506332343014
+        }
+      ]
+    }
+  ]
+}
