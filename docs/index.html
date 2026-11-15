@@ -6,18 +6,19 @@
   <title>Lunar Navigator — Geometric Sun & Earth Visibility</title>
   <style>
     :root { color-scheme: dark; }
-    body { font-family: system-ui, sans-serif; margin: 0; background: #0b0f14; color: #e6edf3; line-height: 1.5; }
-    header, main, footer { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+    body { font-family: system-ui, sans-serif; margin: 0; background: #100e0c; color: #f3ece3; line-height: 1.5; }
+    header, main, footer { max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
     h1 { margin: 0 0 .25rem; font-size: 1.8rem; }
-    .sub { color: #8b949e; margin-bottom: 1.5rem; }
-    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    .sub { color: #a89a88; margin-bottom: 1rem; }
+    .card { background: #1a1714; border: 1px solid #3a342c; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
-    .metric { font-size: 1.6rem; font-weight: 600; }
-    .label { color: #8b949e; font-size: .85rem; }
-    .warn { background: #3d2a00; border-color: #9e6a03; color: #f0c674; }
-    a { color: #58a6ff; }
-    footer { color: #8b949e; font-size: .9rem; border-top: 1px solid #30363d; margin-top: 2rem; }
+    .metric { font-size: 1.5rem; font-weight: 600; }
+    .label { color: #a89a88; font-size: .85rem; }
+    .warn { background: #2a2218; border-color: #8a6a4a; color: #d4b483; }
+    a { color: #d4a574; }
+    iframe { width: 100%; height: 560px; border: 1px solid #3a342c; border-radius: 8px; background: #100e0c; }
+    footer { color: #7a6e62; font-size: .9rem; border-top: 1px solid #3a342c; margin-top: 2rem; padding-top: .75rem; }
   </style>
 </head>
 <body>
@@ -29,6 +30,10 @@
     <div class="card warn">
       Geometric center of the Sun and Earth above a smooth spherical tangent plane. Not terrain-aware, not apparent-disk visibility, not power, thermal, or communications assessment. Coordinates provisionally interpreted as planetocentric in MOON_ME_DE421.
     </div>
+
+    <h2>3-D view</h2>
+    <p><a href="3d.html">Open the full 3-D globe page</a> · Drag to rotate · Defaults to the January 2028 contrast.</p>
+    <iframe src="3d.html" title="Lunar Navigator 3D globe"></iframe>
 
     <h2>Primary demonstration — 1–14 January 2028</h2>
     <p>Largest simultaneous-availability contrast in the fixed three-site, three-window set.</p>
@@ -67,7 +72,7 @@
     <h2>Interactive app</h2>
     <p>Full Streamlit interface (drama windows + live calculation) lives in the repository:</p>
     <p><a href="https://github.com/holeyfield33-art/lunar-navigator">github.com/holeyfield33-art/lunar-navigator</a></p>
-    <p>Run locally with <code>streamlit run app.py</code> after placing <code>data/drama_windows.csv</code> and the DE421 kernels.</p>
+    <p>Run locally with <code>streamlit run app.py</code> after placing the DE421 kernels.</p>
 
     <h2>Data and method</h2>
     <ul>
